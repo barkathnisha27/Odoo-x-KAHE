@@ -463,7 +463,7 @@ npm run dev
 
 ---
 
-# Team
+# Team pseudocoders
 
 Built for **Odoo x KAHE Hackathon**
 
