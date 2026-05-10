@@ -1,65 +1,375 @@
-import Image from "next/image";
+'use client';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { Footer } from '@/components/layout/Footer';
+import { getTrendingCities } from '@/data/cities';
 
-export default function Home() {
+const taglines = ['Plan smarter.', 'Travel deeper.'];
+
+function TypewriterText() {
+  const [displayText, setDisplayText] = useState('');
+  const [lineIndex, setLineIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+
+  useEffect(() => {
+    const fullText = taglines.join(' ');
+    if (charIndex < fullText.length) {
+      const timer = setTimeout(() => {
+        setDisplayText(fullText.slice(0, charIndex + 1));
+        setCharIndex(c => c + 1);
+      }, 60);
+      return () => clearTimeout(timer);
+    }
+  }, [charIndex]);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <span>
+      {displayText}
+      <span className="animate-pulse text-[#00D4FF]">|</span>
+    </span>
+  );
+}
+
+function FloatingObjects() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Globe */}
+      <motion.div
+        animate={{ y: [-10, 10, -10], rotate: [0, 5, -5, 0] }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute top-[20%] left-[10%] text-7xl opacity-20 select-none"
+      >
+        🌍
+      </motion.div>
+      {/* Plane orbiting */}
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+        className="absolute top-[30%] right-[15%] w-60 h-60"
+        style={{ transformOrigin: 'center center' }}
+      >
+        <span className="absolute top-0 left-1/2 text-4xl opacity-30 select-none" style={{ transform: 'translateX(-50%)' }}>✈️</span>
+      </motion.div>
+      {/* Pin */}
+      <motion.div
+        animate={{ y: [-20, 0, -20] }}
+        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute bottom-[25%] left-[20%] text-5xl opacity-15 select-none"
+      >
+        📍
+      </motion.div>
+      {/* Map */}
+      <motion.div
+        animate={{ y: [0, -15, 0], rotate: [-3, 3, -3] }}
+        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute top-[60%] right-[8%] text-6xl opacity-15 select-none"
+      >
+        🗺️
+      </motion.div>
+      {/* Compass */}
+      <motion.div
+        animate={{ rotate: [0, 360] }}
+        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+        className="absolute top-[15%] right-[30%] text-4xl opacity-10 select-none"
+      >
+        🧭
+      </motion.div>
+    </div>
+  );
+}
+
+const features = [
+  { icon: '🗺️', title: 'Itinerary Builder', desc: 'Drag-and-drop your perfect route with our visual day-by-day planner.' },
+  { icon: '🧠', title: 'Route Optimizer', desc: 'AI-powered suggestions to cut costs and travel time between cities.' },
+  { icon: '💰', title: 'Smart Budget', desc: 'Track spending by category with real-time alerts and savings tips.' },
+  { icon: '🌍', title: 'City Explorer', desc: 'Browse 200+ cities with curated activities, costs, and insider tips.' },
+  { icon: '📋', title: 'Packing Lists', desc: 'Smart checklists by trip type — never forget your charger again.' },
+  { icon: '🔗', title: 'Share & Collab', desc: 'Share your itinerary with a link. Let others clone and remix it.' },
+];
+
+export default function LandingPage() {
+  const trending = getTrendingCities();
+
+  return (
+    <div className="bg-animated-mesh">
+      {/* HERO */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <FloatingObjects />
+
+        {/* Gradient mesh overlays */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[rgba(0,212,255,0.05)] via-transparent to-[rgba(255,123,53,0.03)]" />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        <div className="container-custom relative z-10 text-center py-20">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[rgba(0,212,255,0.1)] border border-[rgba(0,212,255,0.2)] text-sm text-[#00D4FF] font-medium mb-8">
+              <span className="w-2 h-2 rounded-full bg-[#00D4FF] animate-pulse" />
+              Now in Public Beta — Free to use
+            </div>
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-[1.1]"
           >
-            Documentation
-          </a>
+            <TypewriterText />
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-lg md:text-xl max-w-2xl mx-auto mb-10"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            Build beautiful itineraries, optimize your route, track your budget, and share your adventures — all in one platform.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="flex items-center justify-center gap-4 flex-wrap"
+          >
+            <Link href="/auth/signup">
+              <Button size="lg" variant="primary">
+                Start Planning Free →
+              </Button>
+            </Link>
+            <Link href="/dashboard">
+              <Button size="lg" variant="secondary">
+                View Demo
+              </Button>
+            </Link>
+          </motion.div>
+
+          {/* Social proof */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+            className="mt-16 flex items-center justify-center gap-8 md:gap-16 flex-wrap"
+          >
+            {[
+              { value: '12,800+', label: 'Travelers' },
+              { value: '34,200+', label: 'Trips Created' },
+              { value: '220+', label: 'Cities Covered' },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center">
+                <p className="stat-number text-2xl md:text-3xl font-bold text-gradient">{stat.value}</p>
+                <p className="text-xs mt-1" style={{ color: 'var(--text-tertiary)' }}>{stat.label}</p>
+              </div>
+            ))}
+          </motion.div>
         </div>
-      </main>
+      </section>
+
+      {/* FEATURES */}
+      <section className="py-24 relative" id="features">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+              Everything you need to
+              <span className="text-gradient"> plan perfectly</span>
+            </h2>
+            <p className="text-lg max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+              Six powerful tools, one beautiful platform.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {features.map((feature, i) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <Card className="h-full group relative overflow-hidden" glow>
+                  <div className="absolute top-0 right-0 w-32 h-32 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{ background: 'radial-gradient(circle, rgba(0,212,255,0.08), transparent)' }}
+                  />
+                  <span className="text-4xl mb-4 block">{feature.icon}</span>
+                  <h3 className="text-lg font-bold mb-2 font-display">{feature.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{feature.desc}</p>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TRENDING DESTINATIONS */}
+      <section className="py-24 relative">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+              Trending <span className="text-gradient">destinations</span>
+            </h2>
+            <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
+              Where the world is heading next.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {trending.map((city, i) => (
+              <motion.div
+                key={city.id}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+              >
+                <Link href="/cities" className="block">
+                  <div className="relative rounded-2xl overflow-hidden aspect-[3/4] group">
+                    <img
+                      src={city.image_url}
+                      alt={city.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <p className="text-sm font-bold">{city.flag_emoji} {city.name}</p>
+                      <p className="text-xs opacity-70">{city.country}</p>
+                      <div className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/40 backdrop-blur-sm text-[10px] font-mono">
+                        💰 ${city.avg_daily_cost}/day
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ROUTE OPTIMIZER TEASER */}
+      <section className="py-24 relative overflow-hidden" id="optimizer">
+        <div className="container-custom">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[rgba(255,123,53,0.1)] border border-[rgba(255,123,53,0.2)] text-xs text-[#FF7B35] font-semibold mb-4">
+                ✨ WOW Feature
+              </span>
+              <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
+                Smart Route<br />
+                <span className="text-gradient">Optimizer</span>
+              </h2>
+              <p className="text-lg mb-8" style={{ color: 'var(--text-secondary)' }}>
+                Our algorithm analyzes your destinations and suggests the most efficient route — saving you time, money, and carbon.
+              </p>
+              <Link href="/auth/signup">
+                <Button variant="warm" size="lg">
+                  Try It Free →
+                </Button>
+              </Link>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="space-y-4">
+                {/* Current Route */}
+                <div className="glass-card p-5">
+                  <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: 'var(--text-tertiary)' }}>Current Route</p>
+                  <div className="flex items-center gap-2 text-sm font-medium">
+                    <span>🇮🇳 Delhi</span>
+                    <span className="text-[var(--text-tertiary)]">→</span>
+                    <span>🇫🇷 Paris</span>
+                    <span className="text-[var(--text-tertiary)]">→</span>
+                    <span>🇦🇪 Dubai</span>
+                  </div>
+                  <p className="mt-2 stat-number text-xl" style={{ color: 'var(--text-secondary)' }}>$2,400 est.</p>
+                </div>
+
+                {/* Optimized Route */}
+                <div className="glass-card p-5 border-[rgba(16,185,129,0.3)]!" style={{ borderColor: 'rgba(16,185,129,0.3)' }}>
+                  <p className="text-xs font-bold uppercase tracking-wider mb-3 text-[#10B981]">✨ Optimized Route</p>
+                  <div className="flex items-center gap-2 text-sm font-medium">
+                    <span>🇮🇳 Delhi</span>
+                    <span className="text-[#10B981]">→</span>
+                    <span>🇦🇪 Dubai</span>
+                    <span className="text-[#10B981]">→</span>
+                    <span>🇫🇷 Paris</span>
+                  </div>
+                  <p className="mt-2 stat-number text-xl text-[#10B981]">$1,850 est.</p>
+                </div>
+
+                {/* Savings */}
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                  className="text-center py-4"
+                >
+                  <span className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[rgba(16,185,129,0.15)] text-[#10B981] font-bold text-lg">
+                    💰 Save $550!
+                  </span>
+                  <p className="text-xs mt-2" style={{ color: 'var(--text-tertiary)' }}>
+                    Dubai is a natural stopover hub — reduces total flight distance by 1,200km
+                  </p>
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 relative">
+        <div className="container-custom text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="font-display text-4xl md:text-6xl font-bold mb-6">
+              Ready to plan your
+              <br />
+              <span className="text-gradient">next adventure?</span>
+            </h2>
+            <p className="text-lg max-w-xl mx-auto mb-10" style={{ color: 'var(--text-secondary)' }}>
+              Join thousands of travelers building smarter itineraries with Traveloop.
+            </p>
+            <Link href="/auth/signup">
+              <Button size="lg" variant="primary">
+                Start Planning Free →
+              </Button>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      <Footer />
     </div>
   );
 }
