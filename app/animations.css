@@ -205,25 +205,43 @@
 .delay-700 { animation-delay: 700ms; }
 .delay-800 { animation-delay: 800ms; }
 
-/* Hover lift effect */
 .hover-lift {
   transition: transform var(--transition-normal), box-shadow var(--transition-normal);
 }
 
 .hover-lift:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
-/* Hover glow effect */
+/* Hover glow effect - toned down */
 .hover-glow {
   transition: box-shadow var(--transition-normal);
 }
 
 .hover-glow:hover {
-  box-shadow: var(--shadow-glow-accent);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.1);
 }
 
 .hover-glow-warm:hover {
-  box-shadow: var(--shadow-glow-warm);
+  box-shadow: 0 0 10px rgba(255, 123, 53, 0.1);
 }
+
+/* Wave animation for greeting emoji */
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+  60% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.animate-wave {
+  animation: wave 2.5s ease-in-out infinite;
+  transform-origin: 70% 70%;
+  display: inline-block;
+}
+

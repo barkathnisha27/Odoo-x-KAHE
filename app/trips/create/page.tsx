@@ -35,7 +35,6 @@ export default function CreateTripWizard() {
     try {
       const trip = await api.trips.create(form);
       toast.success('Trip created successfully! 🎉');
-      // Show confetti logic could go here if canvas-confetti is used in a wrapper
       router.push(`/itinerary/${trip.id}`);
     } catch {
       toast.error('Failed to create trip');
@@ -46,14 +45,16 @@ export default function CreateTripWizard() {
 
   const update = (key: string, val: any) => setForm(prev => ({ ...prev, [key]: val }));
 
+  const stepLabels = ['Basics', 'Dates & Type', 'Preview'];
+
   return (
-    <div className="container-custom py-12 max-w-3xl">
+    <div className="container-custom page-content max-w-3xl">
       {/* Progress Bar */}
-      <div className="mb-12">
-        <div className="flex justify-between mb-2">
-          {['Basics', 'Dates & Type', 'Preview'].map((label, i) => (
-            <span key={label} className={`text-xs font-medium uppercase tracking-wider ${step >= i + 1 ? 'text-[#00D4FF]' : 'text-[var(--text-tertiary)]'}`}>
-              Step {i + 1}: {label}
+      <div className="mb-10 md:mb-12">
+        <div className="flex justify-between mb-2 gap-2">
+          {stepLabels.map((label, i) => (
+            <span key={label} className={`text-[10px] sm:text-xs font-medium uppercase tracking-wider truncate ${step >= i + 1 ? 'text-[#00D4FF]' : 'text-[var(--text-tertiary)]'}`}>
+              <span className="hidden sm:inline">Step {i + 1}: </span>{label}
             </span>
           ))}
         </div>
@@ -71,7 +72,7 @@ export default function CreateTripWizard() {
         {step === 1 && (
           <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
             <Card padding="lg" glow>
-              <h2 className="text-3xl font-display font-bold mb-6">Let's start with the basics</h2>
+              <h2 className="text-2xl sm:text-3xl font-display font-bold mb-6">Let&apos;s start with the basics</h2>
               <div className="space-y-6">
                 <Input
                   label="Trip Name"
@@ -90,8 +91,8 @@ export default function CreateTripWizard() {
                 {/* Cover Image Upload Placeholder */}
                 <div>
                   <label className="text-sm font-medium mb-1.5 block" style={{ color: 'var(--text-secondary)' }}>Cover Image</label>
-                  <div className="border-2 border-dashed border-white/20 rounded-xl p-8 text-center hover:bg-white/5 hover:border-[#00D4FF]/50 transition-colors cursor-pointer group">
-                    <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">📸</div>
+                  <div className="border-2 border-dashed border-white/20 rounded-xl p-6 sm:p-8 text-center hover:bg-white/5 hover:border-[#00D4FF]/50 transition-colors cursor-pointer group">
+                    <svg className="mx-auto mb-3 w-10 h-10 text-[var(--text-secondary)] group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M16 12l-4 4m0 0l-4-4m4 4V3" /></svg>
                     <p className="text-sm font-medium">Click to upload or drag and drop</p>
                     <p className="text-xs mt-1" style={{ color: 'var(--text-tertiary)' }}>JPG, PNG, WebP up to 5MB</p>
                   </div>
@@ -108,9 +109,9 @@ export default function CreateTripWizard() {
         {step === 2 && (
           <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
             <Card padding="lg" glow>
-              <h2 className="text-3xl font-display font-bold mb-6">When and who?</h2>
+              <h2 className="text-2xl sm:text-3xl font-display font-bold mb-6">When and who?</h2>
               <div className="space-y-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Input
                     type="date"
                     label="Start Date"
@@ -127,7 +128,7 @@ export default function CreateTripWizard() {
 
                 <div>
                   <label className="text-sm font-medium mb-3 block" style={{ color: 'var(--text-secondary)' }}>Trip Type</label>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {[
                       { id: 'solo', icon: '🚶', label: 'Solo' },
                       { id: 'couple', icon: '👫', label: 'Couple' },
@@ -137,14 +138,14 @@ export default function CreateTripWizard() {
                       <div
                         key={type.id}
                         onClick={() => update('trip_type', type.id)}
-                        className={`flex flex-col items-center justify-center p-4 rounded-xl cursor-pointer border-2 transition-all ${
+                        className={`flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl cursor-pointer border-2 transition-all ${
                           form.trip_type === type.id
                             ? 'border-[#00D4FF] bg-[rgba(0,212,255,0.1)]'
                             : 'border-white/10 hover:bg-white/5'
                         }`}
                       >
-                        <span className="text-3xl mb-2">{type.icon}</span>
-                        <span className="text-sm font-medium">{type.label}</span>
+                        <span className="text-2xl sm:text-3xl mb-1 sm:mb-2">{type.icon}</span>
+                        <span className="text-xs sm:text-sm font-medium">{type.label}</span>
                       </div>
                     ))}
                   </div>
@@ -153,9 +154,9 @@ export default function CreateTripWizard() {
                 <div>
                   <label className="text-sm font-medium mb-1.5 block" style={{ color: 'var(--text-secondary)' }}>Number of Travelers</label>
                   <div className="flex items-center gap-4">
-                    <button onClick={() => update('traveler_count', Math.max(1, form.traveler_count - 1))} className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-white/20">-</button>
+                    <button onClick={() => update('traveler_count', Math.max(1, form.traveler_count - 1))} className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">-</button>
                     <span className="text-xl font-bold font-mono w-8 text-center">{form.traveler_count}</span>
-                    <button onClick={() => update('traveler_count', form.traveler_count + 1)} className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-white/20">+</button>
+                    <button onClick={() => update('traveler_count', form.traveler_count + 1)} className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">+</button>
                   </div>
                 </div>
 
@@ -175,13 +176,13 @@ export default function CreateTripWizard() {
               <div className="absolute top-0 right-0 w-64 h-64 bg-[rgba(0,212,255,0.1)] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
               
               <div className="text-center mb-8 relative z-10">
-                <span className="text-5xl block mb-4">✨</span>
-                <h2 className="text-3xl font-display font-bold mb-2">Looks amazing!</h2>
+                <span className="text-4xl sm:text-5xl block mb-4">✨</span>
+                <h2 className="text-2xl sm:text-3xl font-display font-bold mb-2">Looks amazing!</h2>
                 <p style={{ color: 'var(--text-secondary)' }}>Review your trip details before we set things up.</p>
               </div>
 
-              <div className="bg-black/30 rounded-2xl p-6 border border-white/5 mb-8 relative z-10">
-                <h3 className="text-2xl font-bold font-display mb-1">{form.name}</h3>
+              <div className="bg-black/30 rounded-2xl p-4 sm:p-6 border border-white/5 mb-8 relative z-10">
+                <h3 className="text-xl sm:text-2xl font-bold font-display mb-1">{form.name}</h3>
                 <p className="text-sm mb-6" style={{ color: 'var(--text-tertiary)' }}>{form.description || 'No description provided.'}</p>
                 
                 <div className="grid grid-cols-2 gap-y-4 text-sm">

@@ -1,0 +1,13 @@
+import React from 'react';
+
+export function getTransportIcon(mode: string): React.ReactNode {
+  switch (mode) {
+    case 'flight': return <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>;
+    case 'train': return <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2m2-10a2 2 0 012-2h2a2 2 0 012 2m0 10l2.176-.004a3 3 0 002.476-1.342L19 9a3 3 0 00-2.476-1.342L15 7m-6 0l2.176-.004A3 3 0 0013.476 5.658L19 3a3 3 0 012.476 1.342L15 7" /></svg>;
+    case 'bus': return <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16l2.879-.686M8 16l2.879.686M8 16V9a2 2 0 012-2h4a2 2 0 012 2v7m-6 0h6m6 0l3-3v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6l3 3m0 0l3 3m-6-6h6" /></svg>;
+    case 'drive': return <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 104 0m4 0v-6a3 3 0 00-3-3H4a3 3 0 00-3 3v6m3-6V7a1 1 0 011-1h1a1 1 0 011 1v1m0 0V7a1 1 0 011-1h1a1 1 0 011 1v1m0 0V7a1 1 0 011-1h1a1 1 0 011 1v1" /></svg>;
+    case 'ferry': return <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>;
+    case 'walk': return <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" /></svg>;
+    default: return <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>;
+  }
+}

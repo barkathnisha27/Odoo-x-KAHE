@@ -11,10 +11,10 @@
   --color-primary-lighter: #162A52;
   --color-accent: #00D4FF;
   --color-accent-dark: #00A8CC;
-  --color-accent-glow: rgba(0, 212, 255, 0.3);
+  --color-accent-glow: rgba(0, 212, 255, 0.15);
   --color-warm: #FF7B35;
   --color-warm-dark: #E06520;
-  --color-warm-glow: rgba(255, 123, 53, 0.3);
+  --color-warm-glow: rgba(255, 123, 53, 0.15);
   --color-surface: rgba(255, 255, 255, 0.08);
   --color-surface-hover: rgba(255, 255, 255, 0.12);
   --color-surface-active: rgba(255, 255, 255, 0.16);
@@ -41,17 +41,21 @@
 
   /* Spacing */
   --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
   --radius-full: 9999px;
 
+  /* Layout */
+  --navbar-height: 72px;
+  --sidebar-width: 280px;
+
   /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.2);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
-  --shadow-glow-accent: 0 0 20px rgba(0, 212, 255, 0.25);
-  --shadow-glow-warm: 0 0 20px rgba(255, 123, 53, 0.25);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-glow-accent: 0 0 15px rgba(0, 212, 255, 0.1);
+  --shadow-glow-warm: 0 0 15px rgba(255, 123, 53, 0.1);
 
   /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -59,6 +63,7 @@
   --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
 
   /* Z-index scale */
+  --z-sidebar: 40;
   --z-dropdown: 50;
   --z-sticky: 100;
   --z-modal-backdrop: 200;
@@ -172,6 +177,15 @@ body {
   background-clip: text;
 }
 
+/* Text utilities */
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
 /* Background utilities */
 .bg-gradient-primary {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 50%, var(--color-primary-lighter) 100%);
@@ -183,9 +197,9 @@ body {
 
 .bg-gradient-mesh {
   background: 
-    radial-gradient(at 20% 20%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
-    radial-gradient(at 80% 80%, rgba(255, 123, 53, 0.06) 0%, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
+    radial-gradient(at 20% 20%, rgba(0, 212, 255, 0.03) 0%, transparent 50%),
+    radial-gradient(at 80% 80%, rgba(255, 123, 53, 0.02) 0%, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(139, 92, 246, 0.02) 0%, transparent 50%),
     var(--color-primary);
 }
 
@@ -203,10 +217,10 @@ body {
   width: 200%;
   height: 200%;
   background: 
-    radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.1) 0%, transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(255, 123, 53, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.06) 0%, transparent 40%);
-  animation: meshFloat 20s ease-in-out infinite;
+    radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255, 123, 53, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.02) 0%, transparent 40%);
+  animation: meshFloat 30s ease-in-out infinite;
   z-index: 0;
   pointer-events: none;
 }
@@ -214,9 +228,15 @@ body {
 /* Container */
 .container-custom {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 2rem;
+}
+
+/* Page content utility — consistent inner page padding */
+.page-content {
+  padding-top: 3rem;
+  padding-bottom: 8rem;
 }
 
 /* Skeleton loader */
@@ -245,9 +265,26 @@ body {
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+  .container-custom {
+    padding: 0 20px;
+  }
+}
+
 @media (max-width: 768px) {
   .container-custom {
     padding: 0 16px;
+  }
+  
+  .page-content {
+    padding-top: 2.5rem;
+    padding-bottom: 4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container-custom {
+    padding: 0 12px;
   }
 }
 
@@ -258,4 +295,14 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

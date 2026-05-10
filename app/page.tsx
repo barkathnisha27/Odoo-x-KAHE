@@ -33,61 +33,13 @@ function TypewriterText() {
   );
 }
 
-function FloatingObjects() {
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {/* Globe */}
-      <motion.div
-        animate={{ y: [-10, 10, -10], rotate: [0, 5, -5, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-[20%] left-[10%] text-7xl opacity-20 select-none"
-      >
-        🌍
-      </motion.div>
-      {/* Plane orbiting */}
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-        className="absolute top-[30%] right-[15%] w-60 h-60"
-        style={{ transformOrigin: 'center center' }}
-      >
-        <span className="absolute top-0 left-1/2 text-4xl opacity-30 select-none" style={{ transform: 'translateX(-50%)' }}>✈️</span>
-      </motion.div>
-      {/* Pin */}
-      <motion.div
-        animate={{ y: [-20, 0, -20] }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute bottom-[25%] left-[20%] text-5xl opacity-15 select-none"
-      >
-        📍
-      </motion.div>
-      {/* Map */}
-      <motion.div
-        animate={{ y: [0, -15, 0], rotate: [-3, 3, -3] }}
-        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-[60%] right-[8%] text-6xl opacity-15 select-none"
-      >
-        🗺️
-      </motion.div>
-      {/* Compass */}
-      <motion.div
-        animate={{ rotate: [0, 360] }}
-        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-        className="absolute top-[15%] right-[30%] text-4xl opacity-10 select-none"
-      >
-        🧭
-      </motion.div>
-    </div>
-  );
-}
-
 const features = [
-  { icon: '🗺️', title: 'Itinerary Builder', desc: 'Drag-and-drop your perfect route with our visual day-by-day planner.' },
-  { icon: '🧠', title: 'Route Optimizer', desc: 'AI-powered suggestions to cut costs and travel time between cities.' },
-  { icon: '💰', title: 'Smart Budget', desc: 'Track spending by category with real-time alerts and savings tips.' },
-  { icon: '🌍', title: 'City Explorer', desc: 'Browse 200+ cities with curated activities, costs, and insider tips.' },
-  { icon: '📋', title: 'Packing Lists', desc: 'Smart checklists by trip type — never forget your charger again.' },
-  { icon: '🔗', title: 'Share & Collab', desc: 'Share your itinerary with a link. Let others clone and remix it.' },
+  { icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>, title: 'Itinerary Builder', desc: 'Drag-and-drop your perfect route with our visual day-by-day planner.' },
+  { icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>, title: 'Route Optimizer', desc: 'AI-powered suggestions to cut costs and travel time between cities.' },
+  { icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" /></svg>, title: 'Smart Budget', desc: 'Track spending by category with real-time alerts and savings tips.' },
+  { icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" /></svg>, title: 'City Explorer', desc: 'Browse 200+ cities with curated activities, costs, and insider tips.' },
+  { icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>, title: 'Packing Lists', desc: 'Smart checklists by trip type — never forget your charger again.' },
+  { icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>, title: 'Share & Collab', desc: 'Share your itinerary with a link. Let others clone and remix it.' },
 ];
 
 export default function LandingPage() {
@@ -96,12 +48,10 @@ export default function LandingPage() {
   return (
     <div className="bg-animated-mesh">
       {/* HERO */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <FloatingObjects />
-
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
         {/* Gradient mesh overlays */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[rgba(0,212,255,0.05)] via-transparent to-[rgba(255,123,53,0.03)]" />
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[rgba(0,212,255,0.02)] via-transparent to-transparent" />
         </div>
 
         <div className="container-custom relative z-10 text-center py-20">
@@ -120,7 +70,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-[1.1]"
+            className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight tracking-tight"
           >
             <TypewriterText />
           </motion.h1>
@@ -129,7 +79,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-lg md:text-xl max-w-2xl mx-auto mb-10"
+            className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-10"
             style={{ color: 'var(--text-secondary)' }}
           >
             Build beautiful itineraries, optimize your route, track your budget, and share your adventures — all in one platform.
@@ -175,7 +125,7 @@ export default function LandingPage() {
       </section>
 
       {/* FEATURES */}
-      <section className="py-24 relative" id="features">
+      <section className="py-32 relative" id="features">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -183,7 +133,7 @@ export default function LandingPage() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
               Everything you need to
               <span className="text-gradient"> plan perfectly</span>
             </h2>
@@ -201,12 +151,9 @@ export default function LandingPage() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
-                <Card className="h-full group relative overflow-hidden" glow>
-                  <div className="absolute top-0 right-0 w-32 h-32 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{ background: 'radial-gradient(circle, rgba(0,212,255,0.08), transparent)' }}
-                  />
-                  <span className="text-4xl mb-4 block">{feature.icon}</span>
-                  <h3 className="text-lg font-bold mb-2 font-display">{feature.title}</h3>
+                <Card className="h-full" padding="lg">
+                  <div className="w-10 h-10 rounded-lg bg-[rgba(255,255,255,0.05)] border border-white/10 flex items-center justify-center text-white mb-6 flex-shrink-0">{feature.icon}</div>
+                  <h3 className="text-lg font-bold mb-2">{feature.title}</h3>
                   <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{feature.desc}</p>
                 </Card>
               </motion.div>
@@ -216,7 +163,7 @@ export default function LandingPage() {
       </section>
 
       {/* TRENDING DESTINATIONS */}
-      <section className="py-24 relative">
+      <section className="py-32 relative bg-[rgba(255,255,255,0.01)] border-y border-white/5">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -224,7 +171,7 @@ export default function LandingPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
               Trending <span className="text-gradient">destinations</span>
             </h2>
             <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
@@ -251,10 +198,13 @@ export default function LandingPage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                     <div className="absolute bottom-4 left-4 right-4">
-                      <p className="text-sm font-bold">{city.flag_emoji} {city.name}</p>
+                      <p className="text-xs sm:text-sm font-bold">{city.flag_emoji} {city.name}</p>
                       <p className="text-xs opacity-70">{city.country}</p>
                       <div className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/40 backdrop-blur-sm text-[10px] font-mono">
-                        💰 ${city.avg_daily_cost}/day
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                        </svg>
+                        ${city.avg_daily_cost}/day
                       </div>
                     </div>
                   </div>
@@ -266,9 +216,9 @@ export default function LandingPage() {
       </section>
 
       {/* ROUTE OPTIMIZER TEASER */}
-      <section className="py-24 relative overflow-hidden" id="optimizer">
+      <section className="py-32 relative overflow-hidden" id="optimizer">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -277,7 +227,7 @@ export default function LandingPage() {
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[rgba(255,123,53,0.1)] border border-[rgba(255,123,53,0.2)] text-xs text-[#FF7B35] font-semibold mb-4">
                 ✨ WOW Feature
               </span>
-              <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
+              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
                 Smart Route<br />
                 <span className="text-gradient">Optimizer</span>
               </h2>
@@ -332,7 +282,10 @@ export default function LandingPage() {
                   className="text-center py-4"
                 >
                   <span className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[rgba(16,185,129,0.15)] text-[#10B981] font-bold text-lg">
-                    💰 Save $550!
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                    </svg>
+                    Save $550!
                   </span>
                   <p className="text-xs mt-2" style={{ color: 'var(--text-tertiary)' }}>
                     Dubai is a natural stopover hub — reduces total flight distance by 1,200km
@@ -345,14 +298,14 @@ export default function LandingPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 relative">
+      <section className="py-32 relative bg-[rgba(255,255,255,0.01)] border-t border-white/5">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="font-display text-4xl md:text-6xl font-bold mb-6">
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
               Ready to plan your
               <br />
               <span className="text-gradient">next adventure?</span>

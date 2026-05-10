@@ -34,7 +34,7 @@ export default function BudgetDashboard() {
   }, [tripId, setBudget]);
 
   const handleSave = () => {
-    toast.success('Budget saved successfully! 💰');
+    toast.success('Budget saved successfully!');
   };
 
   if (loading) return <PageSkeleton />;
@@ -42,7 +42,7 @@ export default function BudgetDashboard() {
 
   const chartData = BUDGET_CATEGORIES.map(cat => ({
     name: cat.label,
-    value: budget[cat.key],
+    value: Number(budget[cat.key as keyof typeof budget]) || 0,
     color: cat.color
   })).filter(d => d.value > 0);
 
@@ -55,11 +55,11 @@ export default function BudgetDashboard() {
   ];
 
   return (
-    <div className="container-custom py-8 animate-fade-in max-w-6xl">
+    <div className="container-custom py-6 md:py-8 animate-fade-in max-w-6xl">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
         <div>
-          <p className="text-[#00D4FF] font-bold text-sm mb-1 uppercase tracking-wider">{trip.name}</p>
-          <h1 className="text-3xl md:text-4xl font-bold font-display">Budget Dashboard</h1>
+          <p className="text-[#00D4FF] font-bold text-xs sm:text-sm mb-1 uppercase tracking-wider">{trip.name}</p>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold font-display">Budget Dashboard</h1>
         </div>
         
         <div className="flex items-center gap-4">
@@ -75,7 +75,7 @@ export default function BudgetDashboard() {
       </div>
 
       {/* Summary Header Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
         <Card className="bg-gradient-to-br from-[rgba(0,212,255,0.1)] to-transparent border-[#00D4FF]/20">
           <p className="text-sm text-[var(--text-secondary)] mb-1">Total Budget</p>
           <p className="text-3xl font-bold font-mono text-[#00D4FF]">{formatCurrency(totalBudget, budget.currency)}</p>
@@ -110,7 +110,7 @@ export default function BudgetDashboard() {
         <div className="space-y-4">
           <h3 className="text-xl font-bold font-display mb-4">Categories</h3>
           {BUDGET_CATEGORIES.map((cat) => (
-            <Card key={cat.key} padding="sm" className="flex items-center gap-4">
+            <Card key={cat.key} padding="sm" className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
               <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style={{ backgroundColor: `${cat.color}20` }}>
                 {cat.icon}
               </div>
@@ -120,8 +120,8 @@ export default function BudgetDashboard() {
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)]">$</span>
                   <input
                     type="number"
-                    value={budget[cat.key] || ''}
-                    onChange={(e) => updateCategory(cat.key, parseFloat(e.target.value) || 0)}
+                    value={Number(budget[cat.key as keyof typeof budget]) || ''}
+                    onChange={(e) => updateCategory(cat.key as keyof typeof budget, parseFloat(e.target.value) || 0)}
                     className="w-full bg-transparent border-b border-white/10 py-1 pl-8 pr-2 font-mono focus:outline-none focus:border-[#00D4FF] transition-colors"
                     placeholder="0"
                   />
@@ -130,7 +130,7 @@ export default function BudgetDashboard() {
               {/* Mock actual spent per category for visuals */}
               <div className="text-right">
                 <p className="text-xs text-[var(--text-tertiary)] mb-1">Spent</p>
-                <p className="text-sm font-mono font-medium">{formatCurrency((budget[cat.key] * 0.8) || 0, budget.currency)}</p>
+                <p className="text-sm font-mono font-medium">{formatCurrency((Number(budget[cat.key as keyof typeof budget]) * 0.8) || 0, budget.currency)}</p>
               </div>
             </Card>
           ))}
@@ -138,11 +138,11 @@ export default function BudgetDashboard() {
 
         {/* Charts */}
         <div className="space-y-8">
-          <Card className="h-[300px] flex flex-col">
+          <Card className="flex flex-col">
             <h3 className="text-lg font-bold font-display mb-2">Budget Distribution</h3>
-            <div className="flex-1 min-h-0 relative">
+            <div className="flex-1 min-h-[250px] relative">
               {totalBudget > 0 ? (
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                   <PieChart>
                     <Pie
                       data={chartData}
@@ -171,10 +171,10 @@ export default function BudgetDashboard() {
             </div>
           </Card>
 
-          <Card className="h-[300px] flex flex-col">
+          <Card className="flex flex-col">
             <h3 className="text-lg font-bold font-display mb-2">Daily Spending Trend</h3>
-            <div className="flex-1 min-h-0 text-xs">
-               <ResponsiveContainer width="100%" height="100%">
+            <div className="flex-1 min-h-[250px] text-xs">
+               <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                 <BarChart data={barData} margin={{ top: 20, right: 0, left: -20, bottom: 0 }}>
                   <XAxis dataKey="name" stroke="rgba(255,255,255,0.3)" tick={{fill: 'rgba(255,255,255,0.5)'}} />
                   <YAxis stroke="rgba(255,255,255,0.3)" tick={{fill: 'rgba(255,255,255,0.5)'}} />

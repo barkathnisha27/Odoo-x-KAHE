@@ -1,4 +1,8 @@
-export type ActivityCategory = 'adventure' | 'food' | 'nightlife' | 'shopping' | 'culture' | 'sightseeing';
+import type { ActivityCategory } from '@/components/ui/ActivityIcons';
+import { CATEGORY_ICONS, CATEGORY_LABELS } from '@/components/ui/ActivityIcons';
+
+export { CATEGORY_ICONS, CATEGORY_LABELS };
+export type { ActivityCategory };
 
 export interface Activity {
   id: string;
@@ -11,21 +15,3 @@ export interface Activity {
   image_url: string;
   description: string;
 }
-
-export const CATEGORY_ICONS: Record<ActivityCategory, string> = {
-  adventure: '🏔',
-  food: '🍜',
-  nightlife: '🌃',
-  shopping: '🛍',
-  culture: '🏛',
-  sightseeing: '🌅',
-};
-
-export const CATEGORY_LABELS: Record<ActivityCategory, string> = {
-  adventure: 'Adventure',
-  food: 'Food & Dining',
-  nightlife: 'Nightlife',
-  shopping: 'Shopping',
-  culture: 'Culture',
-  sightseeing: 'Sightseeing',
-};

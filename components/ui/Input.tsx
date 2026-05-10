@@ -27,16 +27,16 @@ export function Input({ label, error, icon, helperText, className, id, ...props 
         <input
           id={inputId}
           className={cn(
-            'glass-input w-full px-4 py-3 text-sm font-body',
+            'glass-input w-full px-3.5 py-2.5 text-sm font-medium transition-colors',
             icon ? 'pl-10' : undefined,
-            error ? 'border-[var(--color-error)]! focus:border-[var(--color-error)]! focus:shadow-[0_0_0_3px_rgba(239,68,68,0.15)]!' : undefined,
+            error ? 'border-[var(--color-error)] focus:border-[var(--color-error)] focus:shadow-[0_0_0_1px_var(--color-error)]' : undefined,
             className
           )}
           {...props}
         />
       </div>
       {error && <p className="text-xs font-medium" style={{ color: 'var(--color-error)' }}>{error}</p>}
-      {helperText && !error && <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{helperText}</p>}
+      {helperText && !error && <p className="text-xs font-medium text-[var(--text-tertiary)]">{helperText}</p>}
     </div>
   );
 }
@@ -57,7 +57,7 @@ export function TextArea({ label, error, className, id, ...props }: TextAreaProp
       )}
       <textarea
         id={inputId}
-        className={cn('glass-input w-full px-4 py-3 text-sm font-body resize-none min-h-[100px]', className)}
+        className={cn('glass-input w-full px-3.5 py-2.5 text-sm font-medium transition-colors resize-none min-h-[100px]', className)}
         {...props}
       />
       {error && <p className="text-xs font-medium" style={{ color: 'var(--color-error)' }}>{error}</p>}

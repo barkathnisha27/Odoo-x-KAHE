@@ -6,10 +6,6 @@ import { cities } from '@/data/cities';
 export function useItinerary(initialStops: TripStop[] = []) {
   const [stops, setStops] = useState<TripStop[]>(initialStops);
 
-  useEffect(() => {
-    setStops(initialStops);
-  }, [initialStops]);
-
   const addStop = useCallback((cityId: string, arrivalDate: string, departureDate: string, transportMode: string = 'flight') => {
     const newStop: TripStop = {
       id: `stop-${Date.now()}`,

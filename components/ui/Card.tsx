@@ -12,14 +12,14 @@ interface CardProps {
 }
 
 export function Card({ children, className, hover = true, glow, onClick, padding = 'md' }: CardProps) {
-  const paddings = { none: '', sm: 'p-4', md: 'p-6', lg: 'p-8' };
+  const paddings = { none: '', sm: 'p-4', md: 'p-8 sm:p-10', lg: 'p-10 sm:p-14' };
   return (
     <div
       className={cn(
-        'glass-card',
+        'glass-card overflow-hidden',
         paddings[padding],
-        hover && 'hover-lift',
-        glow && 'hover-glow',
+        hover && 'hover-lift transition-transform duration-200',
+        glow && 'hover:border-[#00D4FF]/30 hover:bg-white/[0.03]',
         onClick && 'cursor-pointer',
         className
       )}
@@ -33,7 +33,7 @@ export function Card({ children, className, hover = true, glow, onClick, padding
 }
 
 interface StatCardProps {
-  icon: string;
+  icon: React.ReactNode;
   label: string;
   value: string | number;
   trend?: string;
@@ -42,21 +42,20 @@ interface StatCardProps {
 
 export function StatCard({ icon, label, value, trend, color = 'var(--color-accent)' }: StatCardProps) {
   return (
-    <Card className="relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-20 h-20 opacity-10" style={{
-        background: `radial-gradient(circle, ${color}, transparent)`,
-      }} />
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-sm mb-1" style={{ color: 'var(--text-tertiary)' }}>{label}</p>
-          <p className="stat-number text-3xl font-bold" style={{ color }}>{value}</p>
+    <Card className="relative overflow-hidden group" hover={false}>
+      <div className="flex items-start justify-between relative z-[1]">
+        <div className="min-w-0 flex-1">
+          <p className="text-sm mb-1.5 font-medium truncate" style={{ color: 'var(--text-secondary)' }}>{label}</p>
+          <p className="stat-number text-2xl md:text-3xl font-bold tracking-tight text-white">{value}</p>
           {trend && (
-            <p className="text-xs mt-1 font-medium" style={{ color: 'var(--color-success)' }}>
+            <p className="text-xs mt-2 font-medium" style={{ color: 'var(--color-success)' }}>
               {trend}
             </p>
           )}
         </div>
-        <span className="text-3xl">{icon}</span>
+        <div className="w-10 h-10 rounded-[10px] bg-[rgba(255,255,255,0.06)] border border-white/5 flex items-center justify-center flex-shrink-0 ml-3" style={{ color }}>
+          {icon}
+        </div>
       </div>
     </Card>
   );

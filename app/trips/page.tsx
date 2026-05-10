@@ -15,12 +15,12 @@ export default function TripsPage() {
 
   if (loading) return <PageSkeleton />;
 
-  const tabs: { id: TripStatus | 'all'; label: string; icon: string }[] = [
-    { id: 'all', label: 'All Trips', icon: '🧳' },
-    { id: 'upcoming', label: 'Upcoming', icon: '⏳' },
-    { id: 'active', label: 'Active', icon: '🏃' },
-    { id: 'completed', label: 'Completed', icon: '✅' },
-    { id: 'draft', label: 'Drafts', icon: '📝' },
+  const tabs: { id: TripStatus | 'all'; label: string; icon: React.ReactNode }[] = [
+    { id: 'all', label: 'All Trips', icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg> },
+    { id: 'upcoming', label: 'Upcoming', icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> },
+    { id: 'active', label: 'Active', icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
+    { id: 'completed', label: 'Completed', icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> },
+    { id: 'draft', label: 'Drafts', icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg> },
   ];
 
   const filteredTrips = trips.filter(t => {
@@ -41,41 +41,43 @@ export default function TripsPage() {
   };
 
   return (
-    <div className="container-custom py-8 animate-fade-in">
+    <div className="container-custom page-content animate-fade-in">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
         <div>
-          <h1 className="text-3xl md:text-4xl font-bold font-display mb-2">My Trips</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold font-display mb-2">My Trips</h1>
           <p style={{ color: 'var(--text-secondary)' }}>Manage all your travel plans in one place.</p>
         </div>
         
         <Link href="/trips/create">
-          <Button variant="primary" icon={<span className="text-lg">➕</span>}>
+          <Button variant="primary" icon={<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>}>
             Create New Trip
           </Button>
         </Link>
       </div>
 
       {/* Filters and Search Bar */}
-      <div className="glass p-2 rounded-2xl mb-8 flex flex-col lg:flex-row gap-4 items-center justify-between border-white/10">
-        <div className="flex flex-wrap gap-1 w-full lg:w-auto">
+      <div className="glass p-2 rounded-2xl mb-8 flex flex-col lg:flex-row gap-3 sm:gap-4 items-stretch lg:items-center justify-between border-white/10">
+        <div className="flex gap-1 w-full lg:w-auto overflow-x-auto no-scrollbar">
           {tabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setFilter(tab.id)}
-              className={`flex-1 lg:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
+              className={`flex-shrink-0 flex items-center justify-center gap-2 px-3 sm:px-4 py-2.5 rounded-xl text-sm font-medium transition-all whitespace-nowrap ${
                 filter === tab.id
                   ? 'bg-[rgba(255,255,255,0.1)] text-white shadow-sm'
                   : 'text-[var(--text-secondary)] hover:bg-[rgba(255,255,255,0.05)] hover:text-white'
               }`}
             >
-              <span>{tab.icon}</span>
+              {tab.icon}
               <span className="hidden sm:inline">{tab.label}</span>
             </button>
           ))}
         </div>
 
         <div className="relative w-full lg:w-64">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)]">🔍</span>
+          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
           <input
             type="text"
             placeholder="Search trips..."

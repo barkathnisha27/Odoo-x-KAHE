@@ -207,9 +207,9 @@ export default function ItineraryBuilder() {
   if (!trip) return <div className="p-8 text-center">Trip not found</div>;
 
   return (
-    <div className="flex h-[calc(100vh-64px)] overflow-hidden">
+    <div className="flex overflow-hidden" style={{ height: 'calc(100vh - var(--navbar-height))' }}>
       {/* LEFT SIDEBAR: Tools & Library */}
-      <div className="w-80 flex-shrink-0 glass-sidebar border-r border-white/10 flex flex-col h-full z-10 hidden md:flex">
+      <div className="w-72 lg:w-80 flex-shrink-0 glass-sidebar border-r border-white/10 flex flex-col h-full z-10 hidden lg:flex">
         <div className="p-6 border-b border-white/10">
           <Badge variant="accent" className="mb-3">{trip.status}</Badge>
           <h2 className="text-xl font-bold font-display leading-tight">{trip.name}</h2>
@@ -274,7 +274,7 @@ export default function ItineraryBuilder() {
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-bold font-display">Route Flow</h2>
             <div className="flex gap-2">
-              <Button variant="secondary" size="sm" icon={<span className="text-sm">🗺️</span>}>Map View</Button>
+              <Button variant="secondary" size="sm" icon={<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>}>Map View</Button>
               <Button variant="primary" size="sm" onClick={() => toast.success('Changes saved!')}>Save Itinerary</Button>
             </div>
           </div>
@@ -285,7 +285,9 @@ export default function ItineraryBuilder() {
             
             {stops.length === 0 ? (
               <div className="text-center py-20 bg-[rgba(255,255,255,0.02)] rounded-xl border border-dashed border-white/10">
-                <span className="text-4xl block mb-4">🌍</span>
+                <svg className="w-12 h-12 mx-auto mb-4 opacity-50 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" />
+                </svg>
                 <h3 className="text-lg font-bold mb-2">Your journey is empty</h3>
                 <p className="text-sm text-[var(--text-tertiary)]">Add cities from the sidebar to start building your route.</p>
               </div>
@@ -298,7 +300,7 @@ export default function ItineraryBuilder() {
                       
                       {/* Transport Badge between stops */}
                       {index < stops.length - 1 && (
-                        <div className="relative flex justify-center -ml-8 my-2 z-10">
+                        <div className="relative flex justify-center my-2 z-10">
                           <div className="bg-[#0A1628] border border-white/10 rounded-full px-3 py-1 flex items-center gap-2 text-xs font-medium text-[var(--text-secondary)] shadow-sm cursor-pointer hover:bg-white/5 transition-colors group">
                             <span className="group-hover:scale-110 transition-transform">{getTransportIcon(stop.transport_mode)}</span>
                             <span className="capitalize">{stop.transport_mode}</span>

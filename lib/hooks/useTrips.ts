@@ -1,20 +1,31 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import { Trip, TripStatus } from '@/types/trips';
-import { mockTrips } from '@/data/trips';
+import { api } from '@/lib/api';
 
 export function useTrips() {
   const [trips, setTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<TripStatus | 'all'>('all');
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setTrips(mockTrips);
+  const loadTrips = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const data = await api.trips.getAll();
+      setTrips(data);
+    } catch (err) {
+      setError((err as Error)?.message || 'Unable to load trips');
+    } finally {
       setLoading(false);
-    }, 400);
-    return () => clearTimeout(timer);
+    }
   }, []);
+
+  useEffect(() => {
+    loadTrips();
+  }, [loadTrips]);
 
   const filteredTrips = filter === 'all' ? trips : trips.filter(t => t.status === filter);
 
@@ -40,10 +51,11 @@ export function useTrips() {
         status: 'draft',
         share_token: null,
         created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       };
       setTrips(prev => [copy, ...prev]);
     }
   }, [trips]);
 
-  return { trips: filteredTrips, allTrips: trips, loading, filter, setFilter, addTrip, updateTrip, deleteTrip, duplicateTrip };
+  return { trips: filteredTrips, allTrips: trips, loading, error, filter, setFilter, addTrip, updateTrip, deleteTrip, duplicateTrip, refresh: loadTrips };
 }

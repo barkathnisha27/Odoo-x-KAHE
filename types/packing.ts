@@ -1,4 +1,8 @@
-export type PackingCategory = 'clothing' | 'electronics' | 'documents' | 'essentials' | 'custom';
+import type { PackingCategory } from '@/components/ui/PackingIcons';
+import { PACKING_CATEGORY_ICONS, PACKING_CATEGORY_LABELS } from '@/components/ui/PackingIcons';
+
+export { PACKING_CATEGORY_ICONS, PACKING_CATEGORY_LABELS };
+export type { PackingCategory };
 
 export interface PackingItem {
   id: string;
@@ -8,19 +12,3 @@ export interface PackingItem {
   is_checked: boolean;
   created_at: string;
 }
-
-export const PACKING_CATEGORY_ICONS: Record<PackingCategory, string> = {
-  clothing: '👕',
-  electronics: '💻',
-  documents: '📄',
-  essentials: '🧴',
-  custom: '➕',
-};
-
-export const PACKING_CATEGORY_LABELS: Record<PackingCategory, string> = {
-  clothing: 'Clothing',
-  electronics: 'Electronics',
-  documents: 'Documents',
-  essentials: 'Essentials',
-  custom: 'Custom',
-};
